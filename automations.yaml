@@ -1,0 +1,9 @@
+- id: '1569800385079'
+  alias: Toggle Lights
+  trigger:
+  - entity_id: binary_sensor.light_switch
+    platform: state
+  condition: []
+  action:
+  - data: {}
+    service: switch.toggle
