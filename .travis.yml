@@ -5,7 +5,8 @@ sudo: required
 services:
   - docker
 before_install:
-  - docker build -t homeassistant/home-assistant .
+  - docker pull homeassistant/home-assistant
+  - docker run --init -d --name="home-assistant" -v /home/rohan/hass:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/home-assistant
 install:
   - pip3 install homeassistant
 script:
@@ -13,6 +14,6 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-    docker commit;
+    docker commit home-assistant rkoripalli/home-assistant:latest;
     docker push rkoripalli/home-assistant;
     fi
